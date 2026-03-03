@@ -1,0 +1,63 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: gopayflow_rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+
+  postgres:
+    image: postgres:16
+    container_name: gopayflow_postgres
+    environment:
+      POSTGRES_DB: gopayflow
+      POSTGRES_USER: gopay
+      POSTGRES_PASSWORD: gopaypass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gopay -d gopayflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: migrate/migrate
+    container_name: gopayflow_migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/migrations:/migrations
+    command: [
+      "-path", "/migrations",
+      "-database", "postgres://gopay:gopaypass@postgres:5432/gopayflow?sslmode=disable",
+      "up"
+    ]
+
+  api:
+    image: golang:1.25-alpine
+    container_name: gopayflow_api
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: postgres://gopay:gopaypass@postgres:5432/gopayflow?sslmode=disable
+      RABBIT_URL: amqp://admin:admin@rabbitmq:5672/
+    command: sh -c "go mod tidy && go run ./cmd/api"
+  
+volumes:
+  rabbit_data:
+  postgres_data:
