@@ -1,4 +1,4 @@
-module github.com/fiorellizz/gopayflow
+module github.com/fiorellizz/gopay
 
 go 1.25.0
 

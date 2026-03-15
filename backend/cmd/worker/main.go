@@ -12,8 +12,8 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/streadway/amqp"
 
-	"github.com/fiorellizz/gopayflow/internal/domain"
-	"github.com/fiorellizz/gopayflow/internal/infrastructure/database"
+	"github.com/fiorellizz/gopay/internal/domain"
+	"github.com/fiorellizz/gopay/internal/infrastructure/database"
 )
 
 func main() {

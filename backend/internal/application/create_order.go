@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/fiorellizz/gopayflow/internal/domain"
+	"github.com/fiorellizz/gopay/internal/domain"
 )
 
 type CreateOrderInput struct {

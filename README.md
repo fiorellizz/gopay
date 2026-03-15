@@ -1,6 +1,6 @@
-# GoPayFlow
+# GoPay
 
-**GoPayFlow** é uma arquitetura backend de processamento de pagamentos construída em **Golang** com foco em **processamento assíncrono**, **escalabilidade horizontal** e **infraestrutura containerizada**.
+**GoPay** é uma arquitetura backend de processamento de pagamentos construída em **Golang** com foco em **processamento assíncrono**, **escalabilidade horizontal** e **infraestrutura containerizada**.
 
 O projeto simula o fluxo de um **sistema de pagamentos**, separando claramente:
 

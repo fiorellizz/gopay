@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/fiorellizz/gopayflow/internal/application"
+	"github.com/fiorellizz/gopay/internal/application"
 )
 
 type OrderHandler struct {

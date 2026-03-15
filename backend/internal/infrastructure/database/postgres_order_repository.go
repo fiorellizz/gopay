@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/fiorellizz/gopayflow/internal/domain"
+	"github.com/fiorellizz/gopay/internal/domain"
 )
 
 type PostgresOrderRepository struct {

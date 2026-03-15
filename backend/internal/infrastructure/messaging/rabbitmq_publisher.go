@@ -6,7 +6,7 @@ import (
 
 	"github.com/streadway/amqp"
 
-	"github.com/fiorellizz/gopayflow/internal/domain"
+	"github.com/fiorellizz/gopay/internal/domain"
 )
 
 type RabbitMQPublisher struct {

@@ -8,11 +8,11 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/gin-gonic/gin"
 
-	"github.com/fiorellizz/gopayflow/internal/application"
-	"github.com/fiorellizz/gopayflow/internal/infrastructure/database"
-	httpInterface "github.com/fiorellizz/gopayflow/internal/interfaces/http"
+	"github.com/fiorellizz/gopay/internal/application"
+	"github.com/fiorellizz/gopay/internal/infrastructure/database"
+	httpInterface "github.com/fiorellizz/gopay/internal/interfaces/http"
 	"github.com/streadway/amqp"
-	"github.com/fiorellizz/gopayflow/internal/infrastructure/messaging"
+	"github.com/fiorellizz/gopay/internal/infrastructure/messaging"
 )
 
 func main() {

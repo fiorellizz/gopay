@@ -2,7 +2,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: gopayflow_nginx
+    container_name: gopay_nginx
     ports:
       - "8080:80"
     volumes:
@@ -12,7 +12,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: gopayflow_rabbit
+    container_name: gopay_rabbit
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -24,22 +24,22 @@ services:
 
   postgres:
     image: postgres:16
-    container_name: gopayflow_postgres
+    container_name: gopay_postgres
     environment:
-      POSTGRES_DB: gopayflow
+      POSTGRES_DB: gopay
       POSTGRES_USER: gopay
       POSTGRES_PASSWORD: gopaypass
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U gopay -d gopayflow"]
+      test: ["CMD-SHELL", "pg_isready -U gopay -d gopay"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   migrate:
     image: migrate/migrate
-    container_name: gopayflow_migrate
+    container_name: gopay_migrate
     depends_on:
       postgres:
         condition: service_healthy
@@ -47,7 +47,7 @@ services:
       - ./backend/migrations:/migrations
     command: [
       "-path", "/migrations",
-      "-database", "postgres://gopay:gopaypass@postgres:5432/gopayflow?sslmode=disable",
+      "-database", "postgres://gopay:gopaypass@postgres:5432/gopay?sslmode=disable",
       "up"
     ]
 
@@ -62,13 +62,13 @@ services:
       rabbitmq:
         condition: service_started
     environment:
-      DB_URL: postgres://gopay:gopaypass@postgres:5432/gopayflow?sslmode=disable
+      DB_URL: postgres://gopay:gopaypass@postgres:5432/gopay?sslmode=disable
       RABBIT_URL: amqp://admin:admin@rabbitmq:5672/
     command: sh -c "go mod tidy && go run ./cmd/api"
 
   worker:
     image: golang:1.25-alpine
-    container_name: gopayflow_worker
+    container_name: gopay_worker
     working_dir: /app
     volumes:
       - ./backend:/app
@@ -78,7 +78,7 @@ services:
       rabbitmq:
         condition: service_started
     environment:
-      DB_URL: postgres://gopay:gopaypass@postgres:5432/gopayflow?sslmode=disable
+      DB_URL: postgres://gopay:gopaypass@postgres:5432/gopay?sslmode=disable
       RABBIT_URL: amqp://admin:admin@rabbitmq:5672/
     command: sh -c "go mod tidy && go run ./cmd/worker"
 

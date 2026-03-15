@@ -3,7 +3,7 @@ package application
 import (
 	"context"
 
-	"github.com/fiorellizz/gopayflow/internal/domain"
+	"github.com/fiorellizz/gopay/internal/domain"
 )
 
 type ListOrdersUseCase struct {
